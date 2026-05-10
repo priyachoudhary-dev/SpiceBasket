@@ -1,0 +1,447 @@
+/* ============================================================
+   FILE: src/index.css
+   PURPOSE: Global styles, CSS variables, font imports
+   LOAD ORDER: This file loads FIRST before any component
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   STEP 1: Google Fonts Import
+   - Playfair Display → used for all headings (serif, heritage feel)
+   - Poppins → used for body text, buttons, labels (clean, modern)
+   - We load specific weights to keep page load fast
+     400 = regular, 600 = semi-bold, 700 = bold
+   ------------------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* ------------------------------------------------------------
+   STEP 2: Import Tailwind CSS v4
+   - This single line replaces the old v3 three-line directive
+   - @tailwind base / components / utilities is NOT used in v4
+   ------------------------------------------------------------ */
+@import "tailwindcss";
+
+/* ------------------------------------------------------------
+   STEP 3: CSS Custom Properties (Design Tokens)
+   - :root means these variables are available EVERYWHERE
+   - Naming convention: --sb- prefix = Spice Basket
+   - Why variables? Change ONE value here → updates entire app
+   ------------------------------------------------------------ */
+:root {
+  /* --- PRIMARY BRAND COLORS --- */
+
+  /* Saffron: the hero color — warm orange-yellow of saffron spice */
+  --sb-saffron: #f4a31a;
+
+  /* Saffron dark: used for hover states on saffron elements */
+  --sb-saffron-dark: #d4880a;
+
+  /* Saffron light: used for backgrounds, tints, subtle highlights */
+  --sb-saffron-light: #fef3d4;
+
+  /* Gold: rich golden accent — complements saffron, used for borders/icons */
+  --sb-gold: #c9922a;
+
+  /* Gold light: very soft gold for card backgrounds */
+  --sb-gold-light: #fdf6e3;
+
+  /* --- DARK / NEUTRAL COLORS --- */
+
+  /* Espresso: the darkest color — used for primary text, headers */
+  --sb-espresso: #2c1a0e;
+
+  /* Espresso medium: used for secondary text, descriptions */
+  --sb-espresso-mid: #5c3d2e;
+
+  /* Chili: deep red-brown — used for accents, badges, sale tags */
+  --sb-chili: #8b2500;
+
+  /* Chili light: soft red for background highlights */
+  --sb-chili-light: #fdecea;
+
+  /* --- BACKGROUND / SURFACE COLORS --- */
+
+  /* Ivory: the main page background — warm off-white, NOT pure white */
+  --sb-ivory: #fefaf4;
+
+  /* Ivory dark: slightly deeper for card surfaces, section alternates */
+  --sb-ivory-dark: #f5edd8;
+
+  /* Surface: pure white used inside cards and modals */
+  --sb-surface: #ffffff;
+
+  /* --- TEXT COLORS --- */
+
+  /* Text primary: main readable text */
+  --sb-text-primary: #2c1a0e;
+
+  /* Text secondary: captions, metadata, labels */
+  --sb-text-secondary: #7a5c44;
+
+  /* Text muted: placeholder text, disabled states */
+  --sb-text-muted: #b8956a;
+
+  /* --- BORDER / DIVIDER COLORS --- */
+  --sb-border: #e8d5b0;
+  --sb-border-dark: #c9a87c;
+
+  /* --- SHADOW VALUES --- */
+  /* Used in box-shadow — warm brown tinted shadows, not grey */
+  --sb-shadow-sm: 0 2px 8px rgba(44, 26, 14, 0.08);
+  --sb-shadow-md: 0 4px 20px rgba(44, 26, 14, 0.12);
+  --sb-shadow-lg: 0 8px 40px rgba(44, 26, 14, 0.18);
+
+  /* --- TYPOGRAPHY --- */
+  /* Font families used throughout the app */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Poppins", system-ui, sans-serif;
+
+  /* --- BORDER RADIUS --- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+
+  /* --- TRANSITIONS --- */
+  /* Consistent animation speed — use these instead of hardcoding */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* ------------------------------------------------------------
+   STEP 4: Base HTML Resets
+   - These override browser default styles
+   - Without this: browsers add random margins, wrong box sizing
+   ------------------------------------------------------------ */
+
+/* Universal box-sizing: padding/border included in element width */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Root HTML element — sets scroll behavior and font size base */
+html {
+  /* smooth scrolling for anchor links */
+  scroll-behavior: smooth;
+
+  /* 16px base = 1rem. All rem units scale from here */
+  font-size: 16px;
+
+  /* Prevents horizontal scroll on mobile */
+  overflow-x: hidden;
+}
+
+/* Body base styles */
+body {
+  /* Use our brand font for all body text */
+  font-family: var(--font-body);
+
+  /* Ivory background — NOT white, gives warm parchment feel */
+  background-color: var(--sb-ivory);
+
+  /* Espresso text — NOT black, softer on the eyes */
+  color: var(--sb-text-primary);
+
+  /* Improves font rendering on Mac/retina screens */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Prevents content from causing horizontal overflow */
+  overflow-x: hidden;
+
+  /* Minimum height fills entire viewport */
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------
+   STEP 5: Typography Base
+   - All heading tags use Playfair Display
+   - Paragraph uses Poppins (inherited from body)
+   ------------------------------------------------------------ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--sb-espresso);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+p {
+  line-height: 1.7;
+  color: var(--sb-text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  /* Images never overflow their containers */
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  outline: none;
+}
+
+/* ------------------------------------------------------------
+   STEP 6: Utility Classes (Custom — not Tailwind)
+   - We define these for things Tailwind doesn't cover with v4
+   - Use sparingly — prefer Tailwind utility classes in JSX
+   ------------------------------------------------------------ */
+
+/* Spice Basket primary button style */
+.btn-primary {
+  background-color: var(--sb-saffron);
+  color: var(--sb-espresso);
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-fast),
+    box-shadow var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background-color: var(--sb-saffron-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--sb-shadow-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Outline variant button */
+.btn-outline {
+  background-color: transparent;
+  color: var(--sb-saffron);
+  border: 2px solid var(--sb-saffron);
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 10px 26px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline:hover {
+  background-color: var(--sb-saffron);
+  color: var(--sb-espresso);
+}
+
+/* Section container — centers content with max width */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Display font shortcut class */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* ------------------------------------------------------------
+   STEP 7: Scrollbar Styling
+   - Makes the scrollbar match our warm brand colors
+   - Without this: browser shows grey default scrollbar
+   ------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-ivory-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-saffron-dark);
+}
+
+/* ------------------------------------------------------------
+   STEP 8: Text Selection Highlight
+   - Changes the blue browser default selection to brand color
+   ------------------------------------------------------------ */
+::selection {
+  background-color: var(--sb-saffron);
+  color: var(--sb-espresso);
+}
+
+/* ------------------------------------------------------------
+   STEP 9: Page Transition Animation Classes
+   - Used by PageWrapper.jsx to animate between routes
+   ------------------------------------------------------------ */
+
+/* Fade in animation — elements start invisible and appear */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide up animation — elements rise into position */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in from left — used for sidebar / drawer */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in — used for modal / card appears */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Shimmer — used for loading skeleton effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Reusable animation utility classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease forwards;
+}
+
+/* Stagger delays — add to children for cascade effect */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+/* Elements start invisible, animation makes them appear */
+.animate-fade-in,
+.animate-slide-up,
+.animate-scale-in {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* ------------------------------------------------------------
+   STEP 10: Card and Surface Utilities
+   ------------------------------------------------------------ */
+
+/* Standard product card surface */
+.card-surface {
+  background-color: var(--sb-surface);
+  border: 1px solid var(--sb-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sb-shadow-sm);
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.card-surface:hover {
+  box-shadow: var(--sb-shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* Pattern overlay — decorative Indian pattern texture on hero */
+.pattern-overlay {
+  background-image:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(244, 163, 26, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(201, 146, 42, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 60% 80%,
+      rgba(139, 37, 0, 0.05) 0%,
+      transparent 50%
+    );
+}
